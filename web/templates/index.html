@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>ClimateIQ — Climate Intelligence</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+<div class="app-shell">
+
+    <!-- ================= SIDEBAR ================= -->
+
+    <aside class="sidebar">
+
+        <div class="brand">
+
+            <div class="brand-mark">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+
+            <div>
+                <div class="brand-name">
+                    Climate<span>IQ</span>
+                </div>
+
+                <div class="brand-subtitle">
+                    Intelligence System
+                </div>
+            </div>
+
+        </div>
+
+
+        <nav class="navigation">
+
+            <button class="nav-item active" data-section="dashboard">
+                <span class="nav-icon">⌂</span>
+                <span>Dashboard</span>
+            </button>
+
+            <button class="nav-item" data-section="temperature">
+                <span class="nav-icon">◇</span>
+                <span>Temperature</span>
+            </button>
+
+            <button class="nav-item" data-section="heatwave">
+                <span class="nav-icon">♨</span>
+                <span>Heatwave Monitor</span>
+            </button>
+
+            <button class="nav-item" data-section="stations">
+                <span class="nav-icon">✧</span>
+                <span>Stations</span>
+            </button>
+
+            <button class="nav-item" data-section="weather">
+                <span class="nav-icon">▤</span>
+                <span>Weather Data</span>
+            </button>
+
+        </nav>
+
+
+        <div class="sidebar-bottom">
+
+            <div class="system-status">
+
+                <div class="status-dot"></div>
+
+                <div>
+                    <strong>System Online</strong>
+                    <small>PostgreSQL connected</small>
+                </div>
+
+            </div>
+
+
+            <div class="sidebar-message">
+
+                <span class="tiny-orbit">✧</span>
+
+                <p>
+                    Monitoring temperature patterns
+                    for early heatwave awareness.
+                </p>
+
+            </div>
+
+        </div>
+
+    </aside>
+
+
+    <!-- ================= MAIN ================= -->
+
+    <main class="main-content">
+
+        <!-- TOP BAR -->
+
+        <header class="topbar">
+
+            <div class="topbar-label">
+                CLIMATE INTELLIGENCE / 2026
+            </div>
+
+            <div class="topbar-right">
+
+                <div class="live-pill">
+                    <span></span>
+                    LIVE DATA
+                </div>
+
+                <div class="profile">
+                    CI
+                </div>
+
+            </div>
+
+        </header>
+
+
+        <!-- ================= HERO ================= -->
+
+        <section class="hero-section" id="dashboard">
+
+            <div class="hero-copy">
+
+                <div class="eyebrow">
+                    EARLY WARNING · DATA INTELLIGENCE
+                </div>
+
+                <h1>
+                    Understand the heat.
+                    <br>
+                    <em>Before it becomes a risk.</em>
+                </h1>
+
+                <p class="hero-description">
+                    Real meteorological observations from your climate
+                    database, transformed into actionable temperature
+                    intelligence.
+                </p>
+
+
+                <div class="hero-actions">
+
+                    <button class="primary-button"
+                            onclick="scrollToSection('temperature')">
+                        Explore Analysis
+                        <span>→</span>
+                    </button>
+
+                    <button class="secondary-button"
+                            onclick="scrollToSection('weather')">
+                        View Raw Data
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <!-- ATMOSPHERIC VISUAL -->
+
+            <div class="hero-visual">
+
+                <div class="sun-glow"></div>
+
+                <div class="sun"></div>
+
+                <div class="grid-lines"></div>
+
+                <div class="mountain mountain-back"></div>
+                <div class="mountain mountain-front"></div>
+
+                <div class="hero-coordinate">
+                    <span>LIVE OBSERVATION</span>
+                    <strong id="hero-temperature">--.-°C</strong>
+                </div>
+
+                <div class="hero-dataset">
+                    <small>Current Dataset</small>
+                    <strong id="dataset-count">--</strong>
+                    <span>meteorological readings</span>
+                </div>
+
+                <div class="floating-data data-one">
+                    <span>MAX</span>
+                    <strong id="hero-max">--.-°</strong>
+                </div>
+
+                <div class="floating-data data-two">
+                    <span>HEATWAVE</span>
+                    <strong id="hero-heatwave">--</strong>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================= STAT CARDS ================= -->
+
+        <section class="stats-grid">
+
+            <article class="stat-card">
+
+                <div class="stat-icon orange">
+                    °C
+                </div>
+
+                <div class="stat-info">
+                    <span>Average Temperature</span>
+                    <strong id="average-temperature">--.- °C</strong>
+                    <small>Across all readings</small>
+                </div>
+
+            </article>
+
+
+            <article class="stat-card">
+
+                <div class="stat-icon amber">
+                    ↑
+                </div>
+
+                <div class="stat-info">
+                    <span>Maximum Recorded</span>
+                    <strong id="maximum-temperature">--.- °C</strong>
+                    <small>Highest observation</small>
+                </div>
+
+            </article>
+
+
+            <article class="stat-card">
+
+                <div class="stat-icon blue">
+                    ↓
+                </div>
+
+                <div class="stat-info">
+                    <span>Minimum Recorded</span>
+                    <strong id="minimum-temperature">--.- °C</strong>
+                    <small>Lowest observation</small>
+                </div>
+
+            </article>
+
+
+            <article class="stat-card heat-card">
+
+                <div class="stat-icon heat">
+                    ♨
+                </div>
+
+                <div class="stat-info">
+                    <span>Heatwave Readings</span>
+                    <strong id="heatwave-count">--</strong>
+                    <small id="heatwave-percentage">--% of dataset</small>
+                </div>
+
+            </article>
+
+        </section>
+
+
+        <!-- ================= ANALYSIS ================= -->
+
+        <section class="analysis-grid" id="temperature">
+
+
+            <!-- TEMPERATURE GRAPH -->
+
+            <article class="panel chart-panel">
+
+                <div class="panel-header">
+
+                    <div>
+                        <div class="panel-eyebrow">
+                            TEMPERATURE ANALYSIS
+                        </div>
+
+                        <h2>Temperature Trend</h2>
+                    </div>
+
+                    <div class="unit-pill">
+                        °C
+                    </div>
+
+                </div>
+
+
+                <div class="chart-meta">
+
+                    <span>
+                        <i></i>
+                        Meteorological observations
+                    </span>
+
+                    <span id="chart-range">
+                        LIVE DATA
+                    </span>
+
+                </div>
+
+
+                <div class="chart-wrapper">
+
+                    <svg id="temperature-chart"
+                         viewBox="0 0 900 360"
+                         preserveAspectRatio="none">
+
+                        <defs>
+
+                            <linearGradient
+                                id="chartFill"
+                                x1="0"
+                                y1="0"
+                                x2="0"
+                                y2="1">
+
+                                <stop offset="0%"
+                                      stop-color="#f97316"
+                                      stop-opacity="0.30"/>
+
+                                <stop offset="100%"
+                                      stop-color="#f97316"
+                                      stop-opacity="0"/>
+
+                            </linearGradient>
+
+                            <filter id="glow">
+
+                                <feGaussianBlur
+                                    stdDeviation="3"
+                                    result="coloredBlur"/>
+
+                                <feMerge>
+
+                                    <feMergeNode
+                                        in="coloredBlur"/>
+
+                                    <feMergeNode
+                                        in="SourceGraphic"/>
+
+                                </feMerge>
+
+                            </filter>
+
+                        </defs>
+
+                        <g id="chart-grid"></g>
+
+                        <path id="chart-area"
+                              fill="url(#chartFill)"
+                              stroke="none">
+                        </path>
+
+                        <path id="chart-line"
+                              fill="none"
+                              stroke="#f97316"
+                              stroke-width="4"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                              filter="url(#glow)">
+                        </path>
+
+                        <g id="chart-points"></g>
+
+                    </svg>
+
+
+                    <div id="chart-tooltip"
+                         class="chart-tooltip">
+
+                        <span id="tooltip-region">
+                            Station
+                        </span>
+
+                        <strong id="tooltip-temp">
+                            --.-°C
+                        </strong>
+
+                        <small id="tooltip-time">
+                            --
+                        </small>
+
+                    </div>
+
+                </div>
+
+            </article>
+
+
+            <!-- HEATWAVE PANEL -->
+
+            <article class="panel heatwave-panel"
+                     id="heatwave">
+
+                <div class="panel-header">
+
+                    <div>
+
+                        <div class="panel-eyebrow">
+                            EARLY WARNING
+                        </div>
+
+                        <h2>Heatwave Monitor</h2>
+
+                    </div>
+
+                    <div class="warning-symbol">
+                        !
+                    </div>
+
+                </div>
+
+
+                <div class="heatwave-main">
+
+                    <div class="heat-number">
+
+                        <strong id="heatwave-big">
+                            --
+                        </strong>
+
+                        <span>
+                            readings above threshold
+                        </span>
+
+                    </div>
+
+
+                    <div class="heat-ring">
+
+                        <svg viewBox="0 0 120 120">
+
+                            <circle
+                                class="ring-background"
+                                cx="60"
+                                cy="60"
+                                r="48">
+                            </circle>
+
+                            <circle
+                                id="heat-ring-progress"
+                                class="ring-progress"
+                                cx="60"
+                                cy="60"
+                                r="48">
+                            </circle>
+
+                        </svg>
+
+                        <div class="ring-text">
+                            <strong id="heat-ring-value">
+                                --%
+                            </strong>
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="threshold">
+
+                    <div class="threshold-label">
+
+                        <span>
+                            Heatwave threshold
+                        </span>
+
+                        <strong>
+                            35°C
+                        </strong>
+
+                    </div>
+
+                    <div class="threshold-track">
+                        <div id="threshold-progress"></div>
+                    </div>
+
+                </div>
+
+
+                <p class="heatwave-description">
+
+                    Readings at or above 35°C are classified
+                    as heatwave observations for this project.
+
+                </p>
+
+            </article>
+
+        </section>
+
+
+        <!-- ================= STATIONS ================= -->
+
+        <section class="panel stations-panel"
+                 id="stations">
+
+            <div class="panel-header">
+
+                <div>
+
+                    <div class="panel-eyebrow">
+                        MONITORING NETWORK
+                    </div>
+
+                    <h2>Station Overview</h2>
+
+                </div>
+
+                <div class="station-count"
+                     id="station-count">
+                    -- stations
+                </div>
+
+            </div>
+
+
+            <div class="station-grid"
+                 id="station-grid">
+
+                <!-- Javascript inserts stations -->
+
+            </div>
+
+        </section>
+
+
+        <!-- ================= DATA TABLE ================= -->
+
+        <section class="panel data-panel"
+                 id="weather">
+
+            <div class="panel-header data-header">
+
+                <div>
+
+                    <div class="panel-eyebrow">
+                        DATABASE RECORDS
+                    </div>
+
+                    <h2>Meteorological Data</h2>
+
+                </div>
+
+
+                <div class="table-controls">
+
+                    <div class="search-box">
+
+                        <span>⌕</span>
+
+                        <input
+                            type="text"
+                            id="search-input"
+                            placeholder="Search region..."
+                        >
+
+                    </div>
+
+
+                    <select id="status-filter">
+
+                        <option value="all">
+                            All readings
+                        </option>
+
+                        <option value="heatwave">
+                            Heatwave
+                        </option>
+
+                        <option value="normal">
+                            Normal
+                        </option>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+
+            <div class="table-wrapper">
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+
+                            <th>DATA ID</th>
+                            <th>TIMESTAMP</th>
+                            <th>REGION</th>
+                            <th>TEMPERATURE</th>
+                            <th>FAHRENHEIT</th>
+                            <th>STATION</th>
+                            <th>STATUS</th>
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody id="weather-table">
+
+                        <tr>
+
+                            <td colspan="7"
+                                class="loading">
+                                Loading climate data...
+                            </td>
+
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================= FOOTER ================= -->
+
+        <footer>
+
+            <div>
+                CLIMATEIQ · CLIMATE INTELLIGENCE SYSTEM
+            </div>
+
+            <div>
+                PostgreSQL · Python · Flask
+            </div>
+
+        </footer>
+
+    </main>
+
+</div>
+
+
+<script src="{{ url_for('static', filename='dashboard.js') }}"></script>
+
+</body>
+</html>
